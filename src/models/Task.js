@@ -14,7 +14,7 @@ const Task = sequelize.define('projects', {
     done: {
         type: Sequelize.BOOLEAN
     },
-    projectId: {
+    projectid: {
         type: Sequelize.INTEGER,
 
     }

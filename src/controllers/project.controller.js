@@ -1,5 +1,16 @@
 import Project from '../models/Project';
 
+export async function getProjects(req, res) {
+    try {
+    const projects = await Project.findAll();
+    res.json({
+        data:projects
+    });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export async function createProject(req, res) {
     const { name, priority, description, deliverydate} = req.body;
     try {
@@ -8,6 +19,8 @@ export async function createProject(req, res) {
             priority,
             description,
             deliverydate
+        }, {
+            fields: ['name', 'priority', 'description', 'deliverydate']
         });
         if (newProject) {
             return res.json({
@@ -16,9 +29,72 @@ export async function createProject(req, res) {
             });
         }
     } catch (e) {
+        console.log(e)
         res.status(500).json({
             message: 'Something goes wrong',
             data: {}
         });
+    }
+}
+
+export async function  getOneProject(req, res) {
+    try {
+        const { id } = req.params;
+        const project = await Project.findOne({
+            where: {
+                id
+            }
+        });
+        res.json(project)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function  deleteProject(req, res) {
+    try {
+        const { id } = req.params;
+        const deleteRowCount = await Project.destroy({
+            where: {
+                id
+            }
+        });
+        res.json({
+            message: 'Project deleted',
+            count: deleteRowCount
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function updateProject(req, res) {
+    try {
+        const { id } = req.params;
+        const { name, priority, description, deliverydate } = req.body;
+
+        // All Projects
+        const projects = await Project.findAll({
+            attributes: ['id', 'name', 'priority', 'description', 'deliverydate' ],
+            where: {
+                id
+            }
+        });
+        if (projects.length > 0) {
+            projects.forEach(async project => {
+                await project.update({
+                    name,
+                    priority,
+                    description,
+                    deliverydate
+                });
+            })
+        }
+        return res.json({
+            message: 'Project update',
+            data: projects
+        })
+    } catch (e) {
+        console.log(e);
     }
 }
