@@ -3,7 +3,7 @@ import morgan from 'morgan';
 
 // Import routes
 import projectRoutes from './routes/projects';
-import taskRoutes from './routes/task'
+import taskRoutes from './routes/tasks'
 
 // Initialization
 const app = express();
@@ -14,7 +14,7 @@ app.use(json());
 
 // Routes
 app.use('/api/project',projectRoutes);
-app.use('/api/task', taskRoutes);
+app.use('/api/tasks', taskRoutes);
 
 
 export default app;

@@ -3,7 +3,7 @@ import { sequelize } from '../database/database';
 
 
 
-const Task = sequelize.define('projects', {
+const Task = sequelize.define('task', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true

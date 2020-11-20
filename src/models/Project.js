@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 
-import Task from './Task';
+import Task from './Tasks';
 
 const Project = sequelize.define('projects', {
     id: {
